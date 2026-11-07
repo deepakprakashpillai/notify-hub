@@ -201,7 +201,7 @@ async def test_api_key_authentication():
     from unittest.mock import patch
     from app.api.dependencies import get_current_environment
 
-    with patch("app.api.v1.endpoints.events.celery_app.send_task"):
+    with patch("app.workers.dispatcher.celery_app.send_task"):
         async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
             # a) Create app, create environment, generate API key (POST /environments/{env_id}/api-keys)
             res = await client.post(

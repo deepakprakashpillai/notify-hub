@@ -18,6 +18,9 @@ class NotificationJob(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     )  # 'pending', 'processing', 'completed', 'failed'
     # When the source business event actually occurred (supplied by source app).
     occurred_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    event_payload: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    routing_key: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    dispatched_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     deliveries: Mapped[list["DeliveryAttempt"]] = relationship(
         back_populates="job", cascade="all, delete-orphan"

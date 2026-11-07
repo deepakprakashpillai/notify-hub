@@ -38,6 +38,8 @@ services:
     restart: unless-stopped
     environment: &app_env
       ENVIRONMENT: production
+      ADMIN_USERNAME: ${NOTIFY_ADMIN_USERNAME:?required}
+      ADMIN_PASSWORD: ${NOTIFY_ADMIN_PASSWORD:?required}
       POSTGRES_SERVER: db
       POSTGRES_USER: notifyhub
       POSTGRES_PASSWORD: ${NOTIFY_DB_PASSWORD:?required}
@@ -55,6 +57,16 @@ services:
     build: ./backend
     restart: unless-stopped
     command: ["uv", "run", "--no-sync", "celery", "-A", "app.core.celery_app:celery_app", "worker", "-I", "app.workers.tasks", "-Q", "q.events.high,q.events.default,q.events.low", "--loglevel=info", "--concurrency=1"]
+    environment: *app_env
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+  dispatcher:
+    build: ./backend
+    restart: unless-stopped
+    command: ["uv", "run", "--no-sync", "python", "-m", "app.workers.dispatcher"]
     environment: *app_env
     depends_on:
       db:

@@ -7,12 +7,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.api.dependencies import get_current_environment
-from app.core.celery_app import celery_app
 from app.db.session import get_db
 from app.models.application import ApplicationEnvironment
 from app.models.delivery import NotificationJob
 from app.models.workflow import Workflow, WorkflowVersion
 from app.schemas.event import EventIngestionRequest, EventIngestionResponse
+from app.workers.dispatcher import dispatch_pending
 
 router = APIRouter()
 
@@ -129,18 +129,15 @@ async def ingest_event(
         workflow_key=event.workflow,
         status="pending",
         occurred_at=occurred_at,
+        event_payload=event.model_dump(mode="json"),
+        routing_key=f"{env.application_id}.{final_priority}",
     )
     db.add(job)
     await db.commit()
 
     # 5. Enqueue Celery task using the resolved priority queue
     # Routing key: "{app_id}.{priority}" — matches the topic exchange bindings
-    routing_key = f"{env.application_id}.{final_priority}"
-    celery_app.send_task(
-        "app.workers.tasks.process_notification_job",
-        args=[str(job.id), event.model_dump(mode="json")],
-        routing_key=routing_key
-    )
+    await dispatch_pending(db, job.id)
 
     return EventIngestionResponse(
         job_id=job.id,

@@ -1,10 +1,21 @@
 import os
 from typing import Literal
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Notify Hub"
     ENVIRONMENT: Literal["development", "test", "production"] = "development"
+    ADMIN_USERNAME: str = ""
+    ADMIN_PASSWORD: str = ""
+
+    @model_validator(mode="after")
+    def require_admin_credentials(self):
+        if self.ENVIRONMENT == "production" and (
+            not self.ADMIN_USERNAME or len(self.ADMIN_PASSWORD) < 32
+        ):
+            raise ValueError("Production requires an admin username and a password of at least 32 characters")
+        return self
     
     # DB
     POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER", "localhost")

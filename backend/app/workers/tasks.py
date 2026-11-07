@@ -37,13 +37,16 @@ async def async_process_notification_job(job_id: str, event_data: dict, db: Asyn
 async def _execute_job(job_id: str, event_data: dict, db: AsyncSession) -> dict:
     # a) Fetch NotificationJob by job_id
     job_uuid = to_uuid(job_id)
-    stmt = select(NotificationJob).where(NotificationJob.id == job_uuid)
+    stmt = select(NotificationJob).where(NotificationJob.id == job_uuid).with_for_update()
     res = await db.execute(stmt)
     job = res.scalar_one_or_none()
 
     if not job:
         logger.error(f"Job {job_id} not found")
         return {"status": "failed", "reason": "job_not_found"}
+
+    if job.status != "pending":
+        return {"status": job.status, "job_id": str(job.id)}
 
     job.status = "processing"
     await db.commit()

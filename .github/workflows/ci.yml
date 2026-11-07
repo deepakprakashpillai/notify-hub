@@ -13,6 +13,24 @@ jobs:
   backend:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: notifyhub
+          POSTGRES_PASSWORD: test-password
+          POSTGRES_DB: notifyhub
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U notifyhub -d notifyhub"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      POSTGRES_SERVER: 127.0.0.1
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: notifyhub
+      POSTGRES_PASSWORD: test-password
+      POSTGRES_DB: notifyhub
     defaults:
       run:
         working-directory: backend
@@ -22,6 +40,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: uv sync --locked
+      - run: uv run --locked alembic upgrade head
       - run: uv run --locked pytest -q
   frontend:
     runs-on: ubuntu-latest

@@ -17,7 +17,7 @@ from tests.conftest import TestingSessionLocal
 
 @pytest.mark.asyncio
 async def test_event_ingestion_and_idempotency():
-    with patch("app.api.v1.endpoints.events.celery_app.send_task"):
+    with patch("app.workers.dispatcher.celery_app.send_task"):
         async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
             # 1. Setup application and environment
             res = await client.post("/v1/applications", json={"name": "E2E Ingestion App"})
@@ -104,8 +104,8 @@ async def test_event_ingestion_and_idempotency():
 
 @pytest.mark.asyncio
 async def test_celery_worker_task_execution():
-    with patch("app.adapters.email.send_email") as mock_send_email, \
-         patch("app.adapters.in_app.send_in_app") as mock_send_in_app:
+    with patch("app.workers.tasks.send_email") as mock_send_email, \
+         patch("app.workers.tasks.send_in_app") as mock_send_in_app:
 
         mock_send_email.return_value = {"status": "ok"}
         mock_send_in_app.return_value = {"status": "ok"}
@@ -173,7 +173,7 @@ async def test_celery_worker_task_execution():
 
             headers = {"Authorization": f"Bearer {raw_key}"}
 
-            with patch("app.api.v1.endpoints.events.celery_app.send_task"):
+            with patch("app.workers.dispatcher.celery_app.send_task"):
                 res_event = await client.post("/v1/events", json=event_payload, headers=headers)
                 assert res_event.status_code == 202
                 job_id = res_event.json()["job_id"]
@@ -182,6 +182,11 @@ async def test_celery_worker_task_execution():
             async with TestingSessionLocal() as session:
                 result = await async_process_notification_job(str(job_id), event_payload, db=session)
                 assert result["status"] == "completed"
+            async with TestingSessionLocal() as session:
+                repeated = await async_process_notification_job(str(job_id), event_payload, db=session)
+                assert repeated["status"] == "completed"
+            assert mock_send_email.await_count == 1
+            assert mock_send_in_app.await_count == 1
 
             # 4. Query DB to verify NotificationJob.status == "completed" and DeliveryAttempts records
             import uuid as _uuid
