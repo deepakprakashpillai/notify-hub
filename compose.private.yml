@@ -1,0 +1,66 @@
+services:
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:8081:80'
+    depends_on:
+      - api
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: notifyhub
+      POSTGRES_DB: notifyhub
+      POSTGRES_PASSWORD: ${NOTIFY_DB_PASSWORD:?required}
+    volumes:
+      - notify_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U notifyhub -d notifyhub"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  rabbitmq:
+    image: rabbitmq:3.13-alpine
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: notifyhub
+      RABBITMQ_DEFAULT_PASS: ${NOTIFY_RABBIT_PASSWORD:?required}
+    volumes:
+      - notify_queue:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+  api:
+    build: ./backend
+    restart: unless-stopped
+    environment: &app_env
+      ENVIRONMENT: production
+      POSTGRES_SERVER: db
+      POSTGRES_USER: notifyhub
+      POSTGRES_PASSWORD: ${NOTIFY_DB_PASSWORD:?required}
+      POSTGRES_DB: notifyhub
+      POSTGRES_PORT: '5432'
+      RABBITMQ_URL: amqp://notifyhub:${NOTIFY_RABBIT_PASSWORD:?required}@rabbitmq:5672//
+    ports:
+      - '127.0.0.1:8001:8001'
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+  worker:
+    build: ./backend
+    restart: unless-stopped
+    command: ["uv", "run", "--no-sync", "celery", "-A", "app.core.celery_app:celery_app", "worker", "-I", "app.workers.tasks", "-Q", "q.events.high,q.events.default,q.events.low", "--loglevel=info", "--concurrency=1"]
+    environment: *app_env
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+volumes:
+  notify_db:
+  notify_queue:

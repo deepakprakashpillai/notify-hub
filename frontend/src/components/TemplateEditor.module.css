@@ -1,0 +1,894 @@
+/* Unified Multi-Channel Workflow & Template Editor Styles */
+
+.editorContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  font-size: 13px;
+}
+
+/* Banner / Header */
+.bannerHeader {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.workflowInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.workflowBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  background-color: var(--accent-subtle);
+  color: var(--accent);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.workflowTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.workflowKey {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-primary);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.versionSelectGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.versionLabel {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.versionSelect {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.versionSelect:focus {
+  border-color: var(--accent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  background-color: var(--bg-subtle);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btnPrimary {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+
+.btnSuccess {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.btnSuccess:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+/* Channel Status Summary Bar */
+.statusSummary {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.summaryBadges {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.summaryLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.channelStatusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--border-subtle);
+}
+
+.badgeConfigured {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.badgeEmpty {
+  background-color: rgba(113, 113, 122, 0.15);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dotGreen {
+  background-color: #34d399;
+  box-shadow: 0 0 6px rgba(52, 211, 153, 0.6);
+}
+
+.dotGray {
+  background-color: var(--text-muted);
+}
+
+.summaryHint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Two-column Layout: Left Editor / Right Live Preview */
+.editorLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .editorLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pane {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paneHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
+}
+
+.paneTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Channel Switcher Tabs */
+.channelTabs {
+  display: flex;
+  gap: 0.35rem;
+  background-color: var(--bg-primary);
+  padding: 0.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.tabBtnActive {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+}
+
+/* Form inputs */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.labelHint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.input, .textarea {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.75rem;
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus, .textarea:focus {
+  border-color: var(--accent);
+}
+
+.codeArea {
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  tab-size: 2;
+}
+
+.saveRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.successMsg {
+  font-size: 0.8rem;
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.errorMsg {
+  font-size: 0.8rem;
+  color: #fca5a5;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* JSON Test Payload Editor */
+.jsonArea {
+  height: 100px;
+  resize: vertical;
+}
+
+.jsonError {
+  font-size: 0.75rem;
+  color: #fca5a5;
+}
+
+/* Preview Panels */
+.previewContainer {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-height: 220px;
+}
+
+.previewSubject {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  word-break: break-word;
+}
+
+.previewHtml {
+  background-color: #ffffff;
+  color: #18181b;
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  min-height: 110px;
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.inAppPayload {
+  margin: 0;
+  min-height: 110px;
+  max-height: 300px;
+  overflow: auto;
+  padding: 0.85rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.775rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.payloadSchema {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.payloadSchema ul {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0.65rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.payloadSchema li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.payloadSchema code {
+  color: var(--accent);
+  font-family: 'Fira Code', monospace;
+}
+
+.previewText {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.75rem;
+  font-family: monospace;
+  font-size: 0.775rem;
+  white-space: pre-wrap;
+  border: 1px solid var(--border-subtle);
+}
+
+/* In-App Toast / Notification Card Preview */
+.inAppCard {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inAppCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inAppCardBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.inAppCardTime {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.inAppTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.inAppBody {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.inAppActionButton {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  background-color: var(--accent-subtle);
+  color: var(--accent);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.inAppActionButton:hover {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.webhookPayload {
+  background-color: var(--bg-primary);
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  overflow-x: auto;
+  color: #a3e635;
+  margin-top: 0.5rem;
+}
+
+/* ── Settings Tab ─────────────────────────────────────────────────────── */
+.readOnlyBadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: rgba(234, 179, 8, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.settingsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.settingsSection:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.settingsSectionTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.settingsHint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Channel Toggles */
+.channelToggles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.channelToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.channelToggle:hover {
+  border-color: var(--accent);
+}
+
+.channelToggleOn {
+  border-color: var(--accent);
+  background-color: var(--accent-subtle);
+}
+
+.channelToggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.toggleIcon {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.toggleLabel {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.toggleStatus {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.toggleStatusOn {
+  color: #34d399;
+}
+
+/* Variable List */
+.variableList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.variableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 0.8fr 0.3fr;
+  gap: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.variableRow {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 0.8fr 0.3fr;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.4rem 0.5rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+}
+
+.varNameCell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.varNameCode {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: rgba(59, 130, 246, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+}
+
+.varDescInput, .varExampleInput {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.5rem;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  outline: none;
+  width: 100%;
+}
+
+.varDescInput:focus, .varExampleInput:focus {
+  border-color: var(--accent);
+}
+
+.varRequiredLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.varRequiredLabel input {
+  accent-color: var(--accent);
+}
+
+.varRemoveBtn {
+  background: transparent;
+  border: none;
+  color: #71717a;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.varRemoveBtn:hover {
+  color: #ef4444;
+}
+
+/* Add Variable Row */
+.addVariableRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.varNameInput {
+  flex: 1;
+  min-width: 160px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.4rem 0.75rem;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.varNameInput:focus {
+  border-color: var(--accent);
+}
+
+/* Variable Count Badge */
+.varCountBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  background-color: rgba(59, 130, 246, 0.08);
+  color: var(--accent);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Sync payload button inline label */
+.syncPayloadBtn {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 0.7rem;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  text-decoration: underline;
+}
+
+.syncPayloadBtn:hover {
+  background-color: var(--accent-subtle);
+}
+
+/* Variable Reference List (right panel in settings tab) */
+.varEmptyState {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: var(--bg-primary);
+  border: 1px dashed var(--border);
+  border-radius: 0.5rem;
+}
+
+.varRefList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.varRefItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.varRefCode {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: rgba(59, 130, 246, 0.08);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+}
+
+.varRefDesc {
+  flex: 1;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.varRefRequired {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Audience Sidebar */
+.sidebarPane {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 220px;
+}
+
+.audienceList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.audienceItem {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.audienceItem:hover {
+  background: var(--bg-elevated);
+}
+
+.audienceItemActive {
+  background: var(--bg-elevated);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.audienceAddForm {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.audienceAddInput {
+  flex: 1;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}

@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  /* Typography */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+
+  /* ── Backgrounds ─────────────────────────────────────────────────── */
+  --bg-base:     #07070e;
+  --bg-surface:  #0f0f1a;
+  --bg-elevated: #161628;
+  --bg-overlay:  #1c1c32;
+
+  /* Backward-compat aliases */
+  --bg-primary:   var(--bg-base);
+  --bg-secondary: var(--bg-surface);
+  --bg-tertiary:  var(--bg-elevated);
+  --bg-subtle:    var(--bg-elevated);
+  --bg-hover:     var(--bg-overlay);
+
+  /* ── Text ────────────────────────────────────────────────────────── */
+  --text-primary:   #f1f0ff;
+  --text-secondary: #9d9db8;
+  --text-muted:     #5c5c7a;
+
+  /* ── Borders ─────────────────────────────────────────────────────── */
+  --border:        rgba(139, 92, 246, 0.12);
+  --border-subtle: rgba(139, 92, 246, 0.07);
+  --border-active: rgba(139, 92, 246, 0.40);
+
+  /* ── Accent — Violet / Indigo ────────────────────────────────────── */
+  --accent:         #7c3aed;
+  --accent-hover:   #6d28d9;
+  --accent-subtle:  rgba(124, 58, 237, 0.14);
+  --accent-glow:    rgba(124, 58, 237, 0.22);
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+
+  /* ── Semantic colors ─────────────────────────────────────────────── */
+  --green:          #10b981;
+  --green-subtle:   rgba(16, 185, 129, 0.12);
+  --green-border:   rgba(16, 185, 129, 0.25);
+  --amber:          #f59e0b;
+  --amber-subtle:   rgba(245, 158, 11, 0.12);
+  --amber-border:   rgba(245, 158, 11, 0.25);
+  --red:            #ef4444;
+  --red-subtle:     rgba(239, 68, 68, 0.12);
+  --red-border:     rgba(239, 68, 68, 0.25);
+  --blue:           #3b82f6;
+  --blue-subtle:    rgba(59, 130, 246, 0.12);
+  --blue-border:    rgba(59, 130, 246, 0.25);
+
+  /* ── Border radius ───────────────────────────────────────────────── */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ─────────────────────────────────────────────────────── */
+  --shadow-card:  0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-glow:  0 0 0 1px var(--border-active), 0 8px 32px var(--accent-glow);
+  --shadow-modal: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px var(--border);
+
+  /* ── Layout ──────────────────────────────────────────────────────── */
+  --sidebar-width: 228px;
+
+  /* ── Font stacks ─────────────────────────────────────────────────── */
+  --font-display: 'Outfit', 'Inter', sans-serif;
+  --font-mono:    'Fira Code', ui-monospace, 'Cascadia Code', monospace;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter, 'Inter', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  letter-spacing: 0.005em;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Subtle full-page noise texture feel via radial gradient */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% -5%, rgba(124,58,237,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(109,40,217,0.05) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-overlay); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(139,92,246,0.3); }
+
+/* ── Animations ──────────────────────────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.85); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px 0 var(--accent-glow); }
+  50%       { box-shadow: 0 0 20px 4px var(--accent-glow); }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+
+.animate-spin         { animation: spin 1s linear infinite; }
+.animate-pulse-dot    { animation: pulse-dot 2s ease-in-out infinite; }
+.animate-fade-up      { animation: fade-up 0.25s ease-out both; }
+
+/* ── Global utility: glass card ──────────────────────────────────────── */
+.glass-card {
+  background: rgba(15, 15, 26, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* ── Primary CTA button (reusable across pages) ──────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.1rem;
+  background: var(--accent-gradient);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: opacity 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+.btn-primary:hover { opacity: 0.9; box-shadow: 0 4px 20px var(--accent-glow); }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }

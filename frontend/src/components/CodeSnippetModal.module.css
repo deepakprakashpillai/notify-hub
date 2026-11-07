@@ -1,0 +1,111 @@
+.snippetModal {
+  max-width: 680px !important;
+}
+
+.modalTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.subTitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.subTitle code {
+  font-family: var(--font-mono);
+  color: #a78bfa;
+}
+
+.langTabs {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  background-color: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.langTab {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s;
+}
+
+.langTabActive {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.codeBlockContainer {
+  position: relative;
+  background-color: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.copyBtn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s;
+  z-index: 2;
+}
+
+.copyBtn:hover {
+  background-color: var(--bg-overlay);
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+
+.codePre {
+  padding: 1.25rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #a3e635;
+  overflow-x: auto;
+  margin: 0;
+  white-space: pre;
+}
+
+.hintFooter {
+  margin-top: 1rem;
+  padding: 0.65rem 0.85rem;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.hintFooter code {
+  font-family: var(--font-mono);
+  color: #a78bfa;
+}

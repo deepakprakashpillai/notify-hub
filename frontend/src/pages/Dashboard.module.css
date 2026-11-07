@@ -1,0 +1,308 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  animation: fade-up 0.3s ease both;
+}
+
+/* ── Metric Cards ─────────────────────────────────────────────────────── */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1rem;
+}
+
+@media (max-width: 1100px) {
+  .metricsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .metricsGrid { grid-template-columns: 1fr; }
+}
+
+.metricCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gradient shimmer at bottom of card */
+.metricCard::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.metricCard:hover {
+  border-color: var(--border-active);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-3px);
+}
+
+.metricCard:hover::after {
+  opacity: 1;
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metricLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.metricIconBox {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metricValue {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.metricFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.65rem;
+}
+
+.metricDesc {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+}
+
+.quickLinkBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #a78bfa;
+  transition: color 0.15s, gap 0.15s;
+}
+
+.quickLinkBtn:hover {
+  color: var(--accent);
+  gap: 0.4rem;
+}
+
+/* ── Content grid (panels) ─────────────────────────────────────────── */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 960px) {
+  .contentGrid { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.panelTitle {
+  font-size: 0.925rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* ── Application list rows ─────────────────────────────────────────── */
+.appList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.appRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.875rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+}
+
+.appRow:hover {
+  border-color: var(--border);
+  background: var(--bg-overlay);
+}
+
+.appInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.appAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  background: var(--accent-gradient);
+}
+
+.appInfoText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.appName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.appMeta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.envBadges {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.envBadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-overlay);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  text-transform: lowercase;
+}
+
+.envBadgeLive {
+  background: var(--green-subtle);
+  color: #34d399;
+  border-color: var(--green-border);
+}
+
+/* ── Health panel ──────────────────────────────────────────────────── */
+.healthList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.healthRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0.875rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.healthName {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse-dot 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.healthValue {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #34d399;
+  letter-spacing: 0.02em;
+}
+
+/* ── Loading / empty ───────────────────────────────────────────────── */
+.loadingState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  color: var(--text-muted);
+  gap: 0.65rem;
+  font-size: 0.875rem;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  gap: 0.75rem;
+  text-align: center;
+  font-size: 0.85rem;
+}
